@@ -6,6 +6,7 @@ import AuthenService from "../services/authen-service";
 import { ToastContainer } from "react-toastr";
 import {setToast} from '../services/noti-service';
 import {popLastPath} from "../services/path-memorize-service";
+import {Redirector} from '../services/require-authen-service';
 
 class App extends Component {
 
@@ -39,6 +40,7 @@ class App extends Component {
                     <Redirect to="/" />
                 </Switch>
                 <ToastContainer className="toast-bottom-right" ref={el => { this.toast = el }} />
+                <Redirector />
             </div>
         );
     }

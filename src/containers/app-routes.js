@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import Exams from './exams/exams';
 import Login from "./login/login";
 import Register from "./register/register";
+import NewExam from "./new-exam/new-exam";
 
 export const APP_ROUTES = [
     {
@@ -23,5 +24,10 @@ export const APP_ROUTES = [
         exact: true,
         auth: false,
         component: Register,
+    }, {
+        path: "/new-exam",
+        exact: true,
+        auth: true,
+        component: NewExam,
     }
 ];

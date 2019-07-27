@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
-import {Row, Col} from 'reactstrap';
+import {Row, Col, FormGroup, Button} from 'reactstrap';
 import MainContent from "../../../commons/layout/main-content/main-content";
 import ExamSearchBox from "../../../commons/exam-search-box/exam-search-box";
 import {noti} from "../../../services/noti-service";
 import {getPostList} from "../../../api/post-api";
 import ExamListItem from "./exam-list-item/exam-list-item";
 import LinkWithoutDecoration from "../../../commons/link-without-decoration/link-without-decoration";
+import {requireAuthen} from "../../../services/require-authen-service";
 
 class ExamList extends Component {
 
@@ -17,6 +18,7 @@ class ExamList extends Component {
             count: 0,
             search_keyword: '',
         };
+        this._handleNewPostClick = this._handleNewPostClick.bind(this);
     };
 
     componentDidMount() {
@@ -33,10 +35,21 @@ class ExamList extends Component {
         }
     };
 
+    _handleNewPostClick() {
+        requireAuthen(() => {this.props.history.push('/new-exam')});
+    };
+
     render() {
         const {search_keyword, posts} = this.state;
         return (
             <MainContent className="exam-list">
+                <FormGroup row>
+                    <Col lg={{size: 8, offset: 2}} md={12} className="d-flex justify-content-end">
+                        <Button color="primary" onClick={this._handleNewPostClick}>
+                            <i className="fa fa-plus" /> Đóng góp đề thi mới
+                        </Button>
+                    </Col>
+                </FormGroup>
                 <Row className="filter">
                     <Col lg={{size: 8, offset: 2}} md={12} className="d-flex">
                         <ExamSearchBox
