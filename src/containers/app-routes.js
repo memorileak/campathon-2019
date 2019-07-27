@@ -10,7 +10,7 @@ export const APP_ROUTES = [
         component: () => ( <Redirect to="/exams" /> ),
     }, {
         path: "/exams",
-        exact: true,
+        exact: false,
         auth: false,
         component: Exams,
     }

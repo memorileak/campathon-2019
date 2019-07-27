@@ -14,7 +14,6 @@ import {
     DropdownItem,
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
-import SellproLogo from '../../../assets/images/logo/sellpro_logo-2.png';
 import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
@@ -43,7 +42,7 @@ class TopNav extends React.Component {
             <Fragment>
                 <Navbar className="top-nav bg-white" light expand="md">
                     <NavbarBrand href="/">
-                        <img className="app-logo" src={SellproLogo} alt="Sellpro Logo" />
+                        Đề thi UET
                     </NavbarBrand>
                     <NavbarToggler onClick={this._toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
