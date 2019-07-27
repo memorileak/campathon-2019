@@ -6,6 +6,7 @@ import ExamSearchBox from "../../../commons/exam-search-box/exam-search-box";
 import {noti} from "../../../services/noti-service";
 import {getPostList} from "../../../api/post-api";
 import ExamListItem from "./exam-list-item/exam-list-item";
+import LinkWithoutDecoration from "../../../commons/link-without-decoration/link-without-decoration";
 
 class ExamList extends Component {
 
@@ -48,7 +49,9 @@ class ExamList extends Component {
                 <div className="list">
                     {
                         posts.map(post => (
-                            <ExamListItem key={post.id} examItem={post} />
+                            <LinkWithoutDecoration key={post.id} to={`/exams/${post.id}`}>
+                                <ExamListItem examItem={post} />
+                            </LinkWithoutDecoration>
                         ))
                     }
                 </div>

@@ -13,7 +13,7 @@ class ExamListItem extends Component {
             <Card body className="exam-list-item">
                 <PreviewExam examItem={examItem} />
                 <div className="information">
-                    <h5>{truncateTitle(safeRetrieve(examItem, ['title']))}</h5>
+                    <h5>{truncateTitle(safeRetrieve(examItem, ['title']) || '')}</h5>
                     <div className="description d-flex flex-column justify-content-between">
                         <div>
                             <div className="text-secondary">Đăng bởi: {safeRetrieve(examItem, ['post_by'])}</div>
