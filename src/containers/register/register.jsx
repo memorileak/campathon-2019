@@ -23,8 +23,8 @@ class Register extends Component {
             if (password === confirm_password) {
                 try {
                     await userRegister({full_name, email, user_name, password, confirm_password});
-                    const {token} = await userLogIn({user_name, password});
-                    AuthenService.setUserInfo({token});
+                    const {token, user} = await userLogIn({user_name, password});
+                    AuthenService.setUserInfo({token, user});
                 } catch (err) {
                     console.error(err);
                     noti('error', err);

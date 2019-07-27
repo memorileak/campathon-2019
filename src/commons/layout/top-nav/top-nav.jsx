@@ -14,6 +14,7 @@ import {
     DropdownItem,
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
+import {safeRetrieve} from "../../../utils/retrieve-value-utils";
 // import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
@@ -65,7 +66,7 @@ class TopNav extends React.Component {
                                 AuthenService.getUserInfo()
                                     ? <UncontrolledDropdown nav inNavbar>
                                         <DropdownToggle nav caret>
-                                            Wolfgang
+                                            {safeRetrieve(AuthenService.getUserInfo(), ['user', 'full_name'])}
                                         </DropdownToggle>
                                         <DropdownMenu right>
                                             <DropdownItem onClick={() => {}}>

@@ -19,8 +19,8 @@ class Login extends Component {
         const {user_name, password} = this.state;
         if (user_name && password) {
             try {
-                const {token} = await userLogIn({user_name, password});
-                AuthenService.setUserInfo({token});
+                const {token, user} = await userLogIn({user_name, password});
+                AuthenService.setUserInfo({token, user});
             } catch (err) {
                 console.error(err);
                 noti('error', err);
