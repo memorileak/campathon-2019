@@ -44,6 +44,7 @@ class TopNav extends React.Component {
 
     _logOut() {
         AuthenService.logOut();
+        window.location = '/';
     };
 
     render() {
