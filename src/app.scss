@@ -1,0 +1,132 @@
+@import '../node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import '../node_modules/animate.css/animate.css';
+@import '../node_modules/react-input-range/lib/css/index.css';
+@import '../node_modules/jquery-ui/themes/base/theme.css';
+@import '../node_modules/jquery-ui/themes/base/datepicker.css';
+@import './assets/toastr/toastr';
+@import './variables';
+
+html {
+    height: 100%;
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Open Sans', -apple-system, sans-serif, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+        font-size: 13px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        div#root {
+            height: 100%;
+        }
+        .full-height {
+            height: 100%;
+        }
+        .no-border {
+            border: none;
+        }
+        .hidden {
+            display: none;
+        }
+        .sel-shadow {
+            box-shadow: 0px 3px 10px -2px var(--gray);
+        }
+        .nav-tabs .nav-link {
+            cursor: pointer;
+            opacity: 0.3;
+            &.active {
+                opacity: 1;
+            }
+        }
+        .btn, .form-control, .dropdown-menu {
+            font-size: inherit;
+        }
+        .sel-table-sort-column {
+            position: relative;
+            padding-right: 30px;
+            cursor: pointer;
+            &:before {
+                position: absolute;
+                right: 1em;
+                bottom: .75em;
+                content: "\21BF";
+                opacity: .3;
+            }
+            &:after {
+                position: absolute;
+                right: .5em;
+                bottom: .75em;
+                content: "\21C2";
+                opacity: .3;
+            }
+            &.ascending:before {
+                opacity: 1;
+            }
+            &.descending:after {
+                opacity: 1;
+            }
+        }
+        .short-input, .form-control.short-input {
+            width: 150px;
+        }
+        .long-input, .form-control.long-input {
+            width: 380px;
+        }
+        .fit-input, .form-control.fit-input {
+            width: fit-content;
+        }
+        .input-range {
+            .input-range__track--active {
+                background: #{$color-primary};
+                opacity: 0.5;
+            }
+            .input-range__slider {
+                background: #{$color-primary};
+                border: none;
+            }
+        }
+        .break-word {
+            word-break: break-word;
+        }
+        .w-max-content {
+            width: max-content;
+        }
+        td div.product-name-cell {
+            position: relative;
+            padding-right: 30px;
+            .product-external-link {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+        }
+        div.table-responsive {
+            margin-bottom: 1rem;
+            table {
+                margin-bottom: 0;
+            }
+        }
+        div.modal-dialog.confirm-dialog {
+            margin: 30vh auto;
+            .dialog-body {
+                .message {
+                    padding: 1rem 0;
+                }
+            }
+        }
+        @media (min-width: 576px) {
+            div.modal-dialog.modal-xxl {
+                width: 95vw;
+                max-width: 1600px;
+            }
+        }
+    }
+
+    code {
+        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+    }
+}
+

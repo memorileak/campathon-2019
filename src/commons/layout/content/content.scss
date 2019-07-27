@@ -1,0 +1,10 @@
+.sel-content {
+    // Write SCSS here
+    margin-top: 1rem;
+    &.normal {
+        padding: 0 1rem;
+    }
+    &.no-padding {
+        padding: 0;
+    }
+}

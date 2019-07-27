@@ -1,0 +1,52 @@
+{
+  "name": "sel-reactstrap",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "animate.css": "^3.7.2",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.2.1",
+    "cancelable-promise": "^2.4.1",
+    "chart.js": "^2.7.3",
+    "classnames": "latest",
+    "jquery": "^3.4.0",
+    "jquery-ui": "^1.12.1",
+    "moment": "^2.24.0",
+    "node-sass": "^4.11.0",
+    "prop-types": "^15.6.2",
+    "query-string": "^6.8.1",
+    "react": "^16.7.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.7.0",
+    "react-google-recaptcha": "^1.0.5",
+    "react-input-range": "^1.3.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.8",
+    "react-spinners": "^0.5.1",
+    "react-toastify": "^4.5.2",
+    "react-toastr": "^3.0.0",
+    "reactstrap": "^7.1.0",
+    "socket.io-client": "^2.2.0",
+    "store": "^2.0.12",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "local": "cp config/.local.env .env && PORT=9999 react-scripts start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.7.0"
+  }
+}

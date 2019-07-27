@@ -1,0 +1,50 @@
+@import '../../../variables';
+
+.side-nav {
+    padding-top: 5rem;
+    width: 100%;
+    background-color: var(--light, white);
+    ul.nav {
+        margin: 0 1rem;
+        .nav-item {
+            padding: 0;
+            line-height: 2;
+            .nav-item-icon {
+                font-size: 1rem;
+                margin-right: .3rem;
+            }
+        }
+        .nav-link {
+            cursor: pointer;
+            color: #{$color-secondary};
+            padding: .3rem 1rem;
+            border-radius: .25rem;
+            font-weight: 600;
+            transition-duration: .15s;
+            margin-bottom: .3rem;
+            display: flex;
+            align-items: center;
+            &.child-nav-link {
+                padding-left: 2rem;
+                font-weight: normal;
+            }
+            &:hover {
+                background-color: #{$sel-primary}1a;
+            }
+        }
+        .nav-link.active {
+            background-color: #{$sel-primary};
+            color: white;
+            &:hover {
+                background-color: #{$sel-primary};
+            }
+            &.parent {
+                background-color: #{$sel-primary}1a;
+                color: #{$color-secondary};
+                &:hover {
+                    background-color: #{$sel-primary}1a;
+                }
+            }
+        }
+    }
+}

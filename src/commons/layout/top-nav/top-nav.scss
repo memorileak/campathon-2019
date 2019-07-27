@@ -1,0 +1,13 @@
+@import '../../../variables';
+
+.top-nav {
+    height: #{$top-nav-height};
+    a.navbar-brand {
+        height: 100%;
+        .app-logo {
+            height: 100%;
+            width: auto;
+        }
+    }
+    border-bottom: 1px solid #e7e7e7;
+}
