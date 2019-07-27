@@ -1,0 +1,7 @@
+@import '../../variables';
+
+.exams {
+    .exams-container {
+        min-height: calc(100% - #{$top-nav-height} - #{$footer-height});
+    }
+}

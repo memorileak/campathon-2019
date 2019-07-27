@@ -1,17 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {Switch, Redirect, Route} from 'react-router-dom';
 import { APP_ROUTES } from "./app-routes";
 import '../services/noti-service';
 import AuthenService from "../services/authen-service";
 import { ToastContainer } from "react-toastr";
-import {noti, setToast} from '../services/noti-service';
+import {setToast} from '../services/noti-service';
 
 class App extends Component {
 
     componentDidMount() {
         setToast(this.toast);
         AuthenService.register(this, this.forceUpdate.bind(this));
-        noti('success', "App was rendered");
     };
 
     componentWillUnmount() {
@@ -20,7 +19,7 @@ class App extends Component {
 
     render() {
         return (
-            <Fragment>
+            <div className="app full-height">
                 <Switch>
                     {
                         APP_ROUTES.map(route => (
@@ -35,7 +34,7 @@ class App extends Component {
                     <Redirect to="/" />
                 </Switch>
                 <ToastContainer className="toast-bottom-right" ref={el => { this.toast = el }} />
-            </Fragment>
+            </div>
         );
     }
 

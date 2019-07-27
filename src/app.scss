@@ -7,9 +7,8 @@
 @import './variables';
 
 html {
-    height: 100%;
     body {
-        height: 100%;
+        min-height: 100vh;
         margin: 0;
         padding: 0;
         font-family: 'Open Sans', -apple-system, sans-serif, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -19,7 +18,10 @@ html {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         div#root {
-            height: 100%;
+            height: 100vh;
+        }
+        .app {
+            background-color: #{$theme-gray};
         }
         .full-height {
             height: 100%;
