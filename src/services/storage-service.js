@@ -1,6 +1,6 @@
 import store from 'store';
 
-const NAME_SPACE = 'vn.sellpro.';
+const NAME_SPACE = 'campathon.uet-exam.';
 
 export default {
     get: (key) => {

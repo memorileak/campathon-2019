@@ -5,6 +5,7 @@ import '../services/noti-service';
 import AuthenService from "../services/authen-service";
 import { ToastContainer } from "react-toastr";
 import {setToast} from '../services/noti-service';
+import {popLastPath} from "../services/path-memorize-service";
 
 class App extends Component {
 
@@ -27,7 +28,11 @@ class App extends Component {
                                 key={route.exact + route.path}
                                 exact={route.exact}
                                 path={route.path}
-                                component={route.component}
+                                component={
+                                    route.auth === undefined
+                                        ? route.component
+                                        : route.auth ? requireAuthen(route.component) : requireUnAuthen(route.component)
+                                }
                             />
                         ))
                     }
@@ -40,14 +45,14 @@ class App extends Component {
 
 };
 
-//
-// function requireAuthen(component) {
-//     return AuthenService.getUserInfo() ? component : () => <Redirect to='/login' />;
-// };
-//
-// function requireUnAuthen(component) {
-//     return AuthenService.getUserInfo() ? () => <Redirect to={popLastPath() || '/dashboard'} /> : component;
-// };
+
+function requireAuthen(component) {
+    return AuthenService.getUserInfo() ? component : () => <Redirect to='/login' />;
+};
+
+function requireUnAuthen(component) {
+    return AuthenService.getUserInfo() ? () => <Redirect to={popLastPath() || '/exams'} /> : component;
+};
 
 
 export default App;

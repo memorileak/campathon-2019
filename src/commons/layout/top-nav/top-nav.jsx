@@ -14,7 +14,7 @@ import {
     DropdownItem,
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
-import NotificationsMenu from "./notifications-menu/notifications-menu";
+// import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
 
@@ -27,6 +27,14 @@ class TopNav extends React.Component {
         this._logOut = this._logOut.bind(this);
     };
 
+    componentDidMount() {
+        AuthenService.register('TopNav', this.forceUpdate.bind(this));
+    };
+
+    componentWillUnmount() {
+        AuthenService.unregister('TopNav');
+    };
+
     _toggle() {
         this.setState({
             isOpen: !this.state.isOpen
@@ -34,7 +42,7 @@ class TopNav extends React.Component {
     };
 
     _logOut() {
-        AuthenService.logOut(true);
+        AuthenService.logOut();
     };
 
     render() {
@@ -47,25 +55,41 @@ class TopNav extends React.Component {
                     <NavbarToggler onClick={this._toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NotificationsMenu />
+                            {/*<NotificationsMenu />
                             <NavItem>
                                 <NavLink to="/settings" tag={Link}>
                                     <i className="fa fa-cog" />
                                 </NavLink>
-                            </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Wolfgang
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem onClick={() => {}}>
-                                        Profiles
-                                    </DropdownItem>
-                                    <DropdownItem onClick={this._logOut}>
-                                        Log out
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+                            </NavItem>*/}
+                            {
+                                AuthenService.getUserInfo()
+                                    ? <UncontrolledDropdown nav inNavbar>
+                                        <DropdownToggle nav caret>
+                                            Wolfgang
+                                        </DropdownToggle>
+                                        <DropdownMenu right>
+                                            <DropdownItem onClick={() => {}}>
+                                                Thông tin cá nhân
+                                            </DropdownItem>
+                                            <DropdownItem onClick={this._logOut}>
+                                                Đăng xuất
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
+                                    : <Fragment>
+                                        <NavItem className="mr-1">
+                                            <NavLink to="/login" tag={Link}>
+                                                Đăng nhập
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink to="/register" tag={Link}>
+                                                Tạo tài khoản mới
+                                            </NavLink>
+                                        </NavItem>
+                                    </Fragment>
+                            }
+
                         </Nav>
                     </Collapse>
                 </Navbar>

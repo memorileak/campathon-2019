@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AuthenService from '../services/authen-service';
 import {noti, sleepNoti} from "../services/noti-service";
+import {saveLastPath} from "../services/path-memorize-service";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -12,6 +13,7 @@ function handleResponse(res) {
             return Promise.resolve(res.data.data);
         } else {
             if (res.data.code === 22 && AuthenService.getUserInfo()) {
+                saveLastPath(window.location.href.replace(window.location.origin, ''));
                 AuthenService.logOut();
                 noti('warning', 'Your session has expired. Please login again.');
                 sleepNoti();
