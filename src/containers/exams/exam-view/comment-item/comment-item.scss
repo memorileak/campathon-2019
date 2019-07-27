@@ -1,0 +1,31 @@
+@import '../../../../variables';
+
+.comment-item {
+    padding: .75rem 0;
+    &:first-child {
+        padding-top: 0;
+    }
+    &:last-child {
+        padding-bottom: 0;
+    }
+    &:not(:last-child) {
+        border-bottom: 1px solid #{$theme-gray};
+    }
+    .comment-content {
+        margin-bottom: .5rem;
+    }
+    .comment-attachments {
+        margin-bottom: .5rem;
+        img:not(:last-child) {
+            margin-right: .25rem;
+        }
+    }
+    .comment-control {
+        .vote {
+            cursor: pointer;
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+    }
+}

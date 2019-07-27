@@ -1,0 +1,32 @@
+.exam-view {
+    .attachments {
+        display: grid;
+        grid-template-columns: auto;
+        & > * {
+            justify-self: center;
+        }
+    }
+    .control {
+        padding: 1rem;
+        .control-item {
+            font-size: 1rem;
+            &:not(:last-child) {
+                margin-right: 2rem;
+            }
+            &:not(.no-interact) {
+                cursor: pointer;
+            }
+        }
+    }
+    .comments {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .exam-view {
+        .attachments {
+            grid-template-columns: 50% 50%;
+        }
+    }
+}

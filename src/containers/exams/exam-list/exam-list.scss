@@ -13,15 +13,8 @@
 
 @media (min-width: 992px) {
     .exam-list {
-        .filter {
-            margin-bottom: 2.5rem;
-        }
         .list {
-            display: grid;
             grid-template-columns: 33% 33% 33%;
-            &>* {
-                justify-self: center;
-            }
         }
     }
 }
