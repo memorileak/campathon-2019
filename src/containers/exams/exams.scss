@@ -2,6 +2,6 @@
 
 .exams {
     .exams-container {
-        min-height: calc(100% - #{$top-nav-height} - #{$footer-height});
+        min-height: calc(100vh - #{$top-nav-height} - #{$footer-height});
     }
 }

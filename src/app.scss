@@ -8,7 +8,6 @@
 
 html {
     body {
-        min-height: 100vh;
         margin: 0;
         padding: 0;
         font-family: 'Open Sans', -apple-system, sans-serif, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -17,9 +16,6 @@ html {
         font-size: 13px;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        div#root {
-            height: 100vh;
-        }
         .app {
             background-color: #{$theme-gray};
         }

@@ -1,0 +1,13 @@
+.exam-list-item {
+    width: 18rem;
+    height: 25rem;
+    padding: 0;
+    flex: unset;
+    margin-bottom: 1rem;
+    .information {
+        height: 50%;
+        padding: 1rem;
+        display: grid;
+        grid-template-rows: auto 45%;
+    }
+}

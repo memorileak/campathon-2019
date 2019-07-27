@@ -53,7 +53,22 @@ export function senderDelete(route, access_token) {
     return axios.delete(url, {headers}).then(handleResponse);
 }
 
+export function senderGetWithoutAuth(route) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.get(url).then(handleResponse);
+}
+
 export function senderPostWithoutAuth(route, payload) {
     let url = `${API_BASE_URL}${route}`;
     return axios.post(url, payload).then(handleResponse);
+}
+
+export function senderPutWithoutAuth(route, payload) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.put(url, payload).then(handleResponse);
+}
+
+export function senderDeleteWithoutAuth(route) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.delete(url).then(handleResponse);
 }
