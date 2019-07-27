@@ -1,0 +1,28 @@
+@import '../../variables';
+
+.image-dropzone {
+    min-height: 7rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    border: 2px dashed #{$color-primary}50;
+    font-size: 1rem;
+    color: #{$color-secondary};
+    &:focus {
+        outline: none;
+    }
+    .message {
+        width: 100%;
+        text-align: center;
+    }
+    .preview {
+        .image-dropzone-preview {
+            border-radius: .25rem;
+            &:not(:last-child) {
+                margin-right: 1rem;
+            }
+        }
+    }
+}

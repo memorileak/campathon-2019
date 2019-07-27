@@ -55,6 +55,23 @@ export function senderDelete(route, access_token) {
     return axios.delete(url, {headers}).then(handleResponse);
 }
 
+export function senderUploadFile(route, payload, access_token) {
+    let url = `${API_BASE_URL}${route}`;
+    const formData = new FormData();
+    Object.keys(payload).forEach((key) => {
+        if (Array.isArray(payload[key])) {
+            payload[key].forEach(element => {formData.append(key, element)})
+        } else {
+            formData.append(key, payload[key]);
+        }
+    });
+    const headers = {
+        token: access_token || AuthenService.getUserInfo().token,
+        "Content-Type": "multipart/form-data",
+    };
+    return axios.post(url, formData, {headers}).then(handleResponse);
+}
+
 export function senderGetWithoutAuth(route) {
     let url = `${API_BASE_URL}${route}`;
     return axios.get(url).then(handleResponse);
