@@ -31,18 +31,16 @@ class ExamListItem extends Component {
 }
 
 function PreviewExam({examItem}) {
-    const type = safeRetrieve(examItem, ['type']);
-    return type === 'pdf'
-        ? <div />
-        : <Image
-            src={safeRetrieve(examItem, ['preview_attachment'])}
-            alt="Xem trước"
-            width="100%" height="50%"
-        />
+    return <Image
+        src={safeRetrieve(examItem, ['preview_attachment'])}
+        alt="Xem trước"
+        width="100%" height="60%"
+    /> ;
 }
 
 function truncateTitle(title) {
-    return title.length > 70 ? title.substr(0, 70) + '...' : title;
+    const max_length = 50;
+    return title.length > max_length ? title.substr(0, max_length) + '...' : title;
 }
 
 ExamListItem.propTypes = {

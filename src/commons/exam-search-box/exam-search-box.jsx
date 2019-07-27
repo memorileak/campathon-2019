@@ -9,7 +9,7 @@ class ExamSearchBox extends Component {
         return (
             <Form className="exam-search-box d-flex">
                 <Input
-                    placeholder="Bạn tìm đề thi nào?"
+                    placeholder="Bạn muốn tìm gì?"
                     className="search-input"
                     value={searchKeyword}
                     onChange={(e) => {onChange({search_keyword: e.target.value})}}
