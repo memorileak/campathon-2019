@@ -9,6 +9,7 @@ class ExamListItem extends Component {
 
     render() {
         const {examItem} = this.props;
+        const is_confirm = examItem.is_confirm === 'true';
         return (
             <Card body className="exam-list-item">
                 <PreviewExam examItem={examItem} />
@@ -19,10 +20,19 @@ class ExamListItem extends Component {
                             <div className="text-secondary">Đăng bởi: {safeRetrieve(examItem, ['post_by'])}</div>
                             <div className="text-secondary">Ngày đăng: {getDayMonthYearString(safeRetrieve(examItem, ['create_time']))}</div>
                         </div>
-                        <div className="view-vote text-secondary">
-                            <span><i className="fa fa-eye" /> {safeRetrieve(examItem, ['views']) || 0}</span>
-                            <span><i className="fa fa-thumbs-up" /> {safeRetrieve(examItem, ['up_vote']) || 0}</span>
-                            <span><i className="fa fa-thumbs-down" /> {safeRetrieve(examItem, ['down_vote']) || 0}</span>
+                        <div className="view-vote text-secondary d-flex align-items-center justify-content-between">
+                            <span>
+                                <span className="vote-info">
+                                    <i className="fa fa-eye" /> {safeRetrieve(examItem, ['views']) || 0}
+                                </span>
+                                <span className="vote-info">
+                                    <i className="fa fa-thumbs-up" /> {safeRetrieve(examItem, ['up_vote']) || 0}
+                                </span>
+                                <span className="vote-info">
+                                    <i className="fa fa-thumbs-down" /> {safeRetrieve(examItem, ['down_vote']) || 0}
+                                </span>
+                            </span>
+                            {is_confirm ? <i className="fa fa-check-circle text-success" title="Đã kiểm duyệt"/> : null}
                         </div>
                     </div>
                 </div>

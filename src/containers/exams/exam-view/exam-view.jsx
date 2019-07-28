@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import MainContent from "../../../commons/layout/main-content/main-content";
 import {safeRetrieve} from "../../../utils/retrieve-value-utils";
 import {noti} from "../../../services/noti-service";
-import {checkVoteStatus, getPost, votePost} from "../../../api/post-api";
+import {checkVoteStatus, confirmPost, getPost, votePost} from "../../../api/post-api";
 import {getDayMonthYearString} from "../../../utils/datetime-utils";
 import Image from "../../../commons/image/image";
 import CommentItem from "./comment-item/comment-item";
@@ -13,6 +13,9 @@ import {VOTE_TYPES} from "../../../constants/vote-types";
 import AuthenService from '../../../services/authen-service';
 import {requireAuthen} from "../../../services/require-authen-service";
 import {arrayToDictionary} from "../../../utils/array-to-dictionary";
+import {Button, FormGroup} from 'reactstrap';
+import {isAllowedWithPermission} from "../../../utils/authentication-permission-check";
+import {USER_PERMISSIONS} from "../../../constants/user-permissions";
 
 class ExamView extends Component {
 
@@ -121,18 +124,45 @@ class ExamView extends Component {
         });
     };
 
+    async _confirmPost() {
+        if (this.state.post.is_confirm !== 'true') {
+            try {
+                const post_id = safeRetrieve(this.props, ['match', 'params', 'exam_id']);
+                await confirmPost(post_id, {is_confirm: 'true'});
+                this.setState({post: {...this.state.post, is_confirm: 'true'}});
+            } catch (err) {
+                console.error(err);
+                noti('error', err);
+            }
+        }
+    };
+
     render() {
         const {post, comments, vote_type, comment_vote_status} = this.state;
+        const is_confirm =  post.is_confirm === 'true';
         const attachments = post.attachments || [];
         return (
             <MainContent className="exam-view" title={safeRetrieve(post, ['title']) || ''}>
-                <div className="information">
-                    <p className="text-secondary">
+                <FormGroup className="information d-flex align-items-center">
+                    <div className="text-secondary mr-3">
                         Đăng bởi&nbsp;
                         <a href="#!">{safeRetrieve(post, ['post_by'])}</a>&nbsp;-&nbsp;ngày&nbsp;
                         <span className="text-dark">{getDayMonthYearString(safeRetrieve(post, ['create_time']))}</span>
-                    </p>
-                </div>
+                    </div>
+                    {
+                        isAllowedWithPermission(USER_PERMISSIONS.confirm_post)
+                            ? <Button size="lg" outline={!is_confirm} color="success" onClick={this._confirmPost.bind(this)}>
+                                {
+                                    is_confirm
+                                        ? <span><i className="fa fa-check" /> Đã kiểm duyệt</span>
+                                        : 'Kiểm duyệt đề thi này'
+                                }
+                            </Button>
+                            : is_confirm
+                                ? <span className="text-success"><i className="fa fa-check-circle"/> Đã kiểm duyệt</span>
+                                : null
+                    }
+                </FormGroup>
                 <div className="attachments bg-white form-group rounded">
                     {
                         attachments.map(src => (

@@ -12,7 +12,7 @@
         display: grid;
         grid-template-rows: auto 50%;
         .view-vote {
-            &>*:not(:last-child) {
+            .vote-info:not(:last-child) {
                 margin-right: 1rem;
             }
         }

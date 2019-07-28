@@ -1,4 +1,4 @@
-import {senderGet, senderGetWithoutAuth, senderPost, senderUploadFile} from "./api-sender";
+import {senderGet, senderGetWithoutAuth, senderPost, senderPut, senderUploadFile} from "./api-sender";
 import {} from 'query-string';
 import {stringify} from "query-string";
 
@@ -26,4 +26,9 @@ export function votePost(post_id, {vote_type}) {
 export function checkVoteStatus(post_id) {
     const route = `/v1/posts/${post_id}/vote/check`;
     return senderGet(route);
+}
+
+export function confirmPost(post_id, {is_confirm}) {
+    const route = `/v1/posts/${post_id}`;
+    return senderPut(route, {is_confirm});
 }

@@ -1,4 +1,15 @@
+@import '../../../variables';
+
 .exam-view {
+    .information {
+        button.btn.btn-outline-success {
+            &:hover {
+                color: white;
+                background-color: #{$color-success}
+            }
+            background-color: white;
+        }
+    }
     .attachments {
         display: grid;
         grid-template-columns: auto;
