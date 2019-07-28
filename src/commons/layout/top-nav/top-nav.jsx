@@ -15,6 +15,8 @@ import {
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
 import {safeRetrieve} from "../../../utils/retrieve-value-utils";
+import {isAllowedWithPermission} from "../../../utils/authentication-permission-check";
+import {USER_PERMISSIONS} from "../../../constants/user-permissions";
 // import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
@@ -54,6 +56,22 @@ class TopNav extends React.Component {
                     <NavbarBrand href="/">
                         Đề thi UET
                     </NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink to="/" tag={Link}>
+                                Trang chủ
+                            </NavLink>
+                        </NavItem>
+                        {
+                            isAllowedWithPermission(USER_PERMISSIONS.list_user)
+                                ? <NavItem>
+                                    <NavLink to="/users" tag={Link}>
+                                        Quản lý người dùng
+                                    </NavLink>
+                                </NavItem>
+                                : null
+                        }
+                    </Nav>
                     <NavbarToggler onClick={this._toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>

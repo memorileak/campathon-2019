@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastr";
 import {setToast} from '../services/noti-service';
 import {popLastPath} from "../services/path-memorize-service";
 import {Redirector} from '../services/require-authen-service';
+import {isAllowedWithPermission, isAuthenticated} from "../utils/authentication-permission-check";
 
 class App extends Component {
 
@@ -32,7 +33,7 @@ class App extends Component {
                                 component={
                                     route.auth === undefined
                                         ? route.component
-                                        : route.auth ? requireAuthen(route.component) : requireUnAuthen(route.component)
+                                        : route.auth ? requireAuthen(route.permission_required, route.component) : requireUnAuthen(route.component)
                                 }
                             />
                         ))
@@ -48,8 +49,12 @@ class App extends Component {
 };
 
 
-function requireAuthen(component) {
-    return AuthenService.getUserInfo() ? component : () => <Redirect to='/login' />;
+function requireAuthen(permission, component) {
+    return isAuthenticated()
+        ? permission
+            ? isAllowedWithPermission(permission) ? component : () => <Redirect to='/' />
+            : component
+        : () => <Redirect to='/login' />;
 };
 
 function requireUnAuthen(component) {

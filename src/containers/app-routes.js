@@ -1,9 +1,11 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import {USER_PERMISSIONS} from "../constants/user-permissions";
 import Exams from './exams/exams';
 import Login from "./login/login";
 import Register from "./register/register";
 import NewExam from "./new-exam/new-exam";
+import Users from "./users/users";
 
 export const APP_ROUTES = [
     {
@@ -29,5 +31,11 @@ export const APP_ROUTES = [
         exact: true,
         auth: true,
         component: NewExam,
+    }, {
+        path: "/users",
+        exact: true,
+        auth: true,
+        permission_required: USER_PERMISSIONS.list_user,
+        component: Users,
     }
 ];

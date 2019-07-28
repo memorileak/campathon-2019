@@ -1,0 +1,7 @@
+@import '../../variables';
+
+.users {
+    .users-container {
+        min-height: calc(100vh - #{$top-nav-height} - #{$footer-height});
+    }
+}
