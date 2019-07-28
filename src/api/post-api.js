@@ -1,7 +1,10 @@
 import {senderGet, senderGetWithoutAuth, senderPost, senderUploadFile} from "./api-sender";
+import {} from 'query-string';
+import {stringify} from "query-string";
 
-export function getPostList() {
-    const route = `/v1/posts`;
+export function getPostList({title, sort_attribute, ascending: bool_ascending, page_size, page_number}) {
+    const ascending = bool_ascending ? 1 : 0;
+    const route = `/v1/posts?${stringify({title, sort_attribute, ascending, page_size, page_number})}`;
     return senderGetWithoutAuth(route);
 }
 

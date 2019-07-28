@@ -4,4 +4,17 @@
         flex: 1;
         margin-right: .25rem;
     }
+    .sort-filter {
+        & > * {
+            flex: 1;
+        }
+        .sort-attribute {
+            margin-right: .25rem;
+        }
+    }
+    .page-size-filter {
+        & > *:not(.fit-input) {
+            flex: 1;
+        }
+    }
 }

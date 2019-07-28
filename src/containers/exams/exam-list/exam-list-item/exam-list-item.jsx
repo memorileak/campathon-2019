@@ -19,8 +19,10 @@ class ExamListItem extends Component {
                             <div className="text-secondary">Đăng bởi: {safeRetrieve(examItem, ['post_by'])}</div>
                             <div className="text-secondary">Ngày đăng: {getDayMonthYearString(safeRetrieve(examItem, ['create_time']))}</div>
                         </div>
-                        <div className="text-secondary">
-                            <i className="fa fa-eye" /> {safeRetrieve(examItem, ['views']) || 0}
+                        <div className="view-vote text-secondary">
+                            <span><i className="fa fa-eye" /> {safeRetrieve(examItem, ['views']) || 0}</span>
+                            <span><i className="fa fa-thumbs-up" /> {safeRetrieve(examItem, ['up_vote']) || 0}</span>
+                            <span><i className="fa fa-thumbs-down" /> {safeRetrieve(examItem, ['down_vote']) || 0}</span>
                         </div>
                     </div>
                 </div>

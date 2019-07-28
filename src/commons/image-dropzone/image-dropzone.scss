@@ -10,6 +10,7 @@
     border: 2px dashed #{$color-primary}50;
     font-size: 1rem;
     color: #{$color-secondary};
+    cursor: pointer;
     &:focus {
         outline: none;
     }

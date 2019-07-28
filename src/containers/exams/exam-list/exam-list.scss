@@ -9,6 +9,11 @@
             justify-self: center;
         }
     }
+    .pagination-container {
+        nav[aria-label="pagination"] {
+            display: inline-block;
+        }
+    }
 }
 
 @media (min-width: 992px) {
