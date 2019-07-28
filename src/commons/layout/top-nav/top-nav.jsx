@@ -54,7 +54,7 @@ class TopNav extends React.Component {
             <Fragment>
                 <Navbar className="top-nav bg-white" light expand="md">
                     <NavbarBrand href="/">
-                        Đề thi UET
+                        UETexam
                     </NavbarBrand>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
