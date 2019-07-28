@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Col, Input} from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Input} from 'reactstrap';
 import {noti} from "../../../services/noti-service";
 import {getAllRole} from "../../../constants/role-api";
 import FormGroup from "reactstrap/es/FormGroup";
@@ -8,6 +8,8 @@ import CustomInput from "reactstrap/es/CustomInput";
 import {VIETNAMESE_PERMISSIONS} from "../../../constants/user-permissions-vietnamese-mapping";
 import {toString} from "../../../utils/tostring-utils";
 import {changeRoleUser} from "../../../api/users-api";
+import SortableTableWithItemPattern from "../../../commons/sortable-tables/sortable-table-with-item-pattern";
+import {safeRetrieve} from "../../../utils/retrieve-value-utils";
 
 class ChangeUserRoleModal extends Component {
 
@@ -44,16 +46,20 @@ class ChangeUserRoleModal extends Component {
     };
 
     async _handleSubmit() {
-        try {
-            const user_id = this.props.user.id;
-            const {role_id, reason} = this.state;
-            await changeRoleUser(user_id, {role_id, reason});
-            noti('success', 'Thay đổi vai trò thành công');
-            this.props.onRoleChanged();
-            this.props.toggle();
-        } catch (err) {
-            console.error(err);
-            noti('error', err);
+        const user_id = this.props.user.id;
+        const {role_id, reason} = this.state;
+        if (reason) {
+            try {
+                await changeRoleUser(user_id, {role_id, reason});
+                noti('success', 'Thay đổi vai trò thành công');
+                this.props.onRoleChanged();
+                this.props.toggle();
+            } catch (err) {
+                console.error(err);
+                noti('error', err);
+            }
+        } else {
+            noti('warning', 'Xin hãy cung cấp lý do');
         }
 
     };
@@ -63,37 +69,37 @@ class ChangeUserRoleModal extends Component {
         const {role: roles, role_id, reason} = this.state;
         return (
             <Modal
-                isOpen={isOpen} toggle={toggle}
+                isOpen={isOpen} toggle={toggle} size="lg"
                 onOpened={this._handleModalOpened.bind(this)}
                 onClosed={this._handleModalClosed.bind(this)}
             >
                 <ModalHeader toggle={toggle}>Thay đổi vai trò</ModalHeader>
                 <ModalBody>
                     <p>Người dùng: <span className="font-weight-bold">{user.full_name}</span></p>
-                    <FormGroup row>
-                        <Label md={2}>Vai trò:</Label>
-                        <Col md={10}>
-                            {
-                                roles.map((role, i) => (
-                                    <CustomInput
-                                        key={role.id} id={`role-${i}`} name="role-select" type="radio" className="mb-2"
-                                        label={`${role.name} (${role.permission.map(perm => VIETNAMESE_PERMISSIONS[perm]).join(', ')})`}
-                                        checked={toString(role_id) === toString(role.id)}
-                                        onChange={() => {this.setState({role_id: role.id})}}
-                                    />
-                                ))
-                            }
-                        </Col>
+                    <FormGroup>
+                        <Label>Chọn vai trò</Label>
+                        <SortableTableWithItemPattern
+                            striped className="role-select-table"
+                            titles={['Chọn', 'Vai trò', 'Quyền truy cập']}
+
+                            items={roles}
+                            itemPattern={RoleTableItem}
+                            itemKeyGen={role => role.id}
+                            itemProps={{
+                                selectedRoleId: role_id,
+                                onSelectRole: (role) => {this.setState({role_id: role.id})}
+                            }}
+
+                            sortConfig={[]}
+                        />
                     </FormGroup>
-                    <FormGroup row>
-                        <Label md={2}>Lý do:</Label>
-                        <Col md={10}>
-                            <Input
-                                type="textarea" style={{resize: 'none'}} rows={5}
-                                value={reason}
-                                onChange={(e) => {this.setState({reason: e.target.value})}}
-                            />
-                        </Col>
+                    <FormGroup>
+                        <Label>Lý do</Label>
+                        <Input
+                            type="textarea" style={{resize: 'none'}} rows={5}
+                            value={reason}
+                            onChange={(e) => {this.setState({reason: e.target.value})}}
+                        />
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
@@ -104,6 +110,26 @@ class ChangeUserRoleModal extends Component {
         );
     };
 
+}
+
+function RoleTableItem({item, index, selectedRoleId, onSelectRole}) {
+    return (
+        <tr>
+            <td>
+                <CustomInput
+                    id={`role-${index}`} name="role-select" type="radio"
+                    checked={toString(item.id) === toString(selectedRoleId)}
+                    onChange={() => {onSelectRole(item)}}
+                />
+            </td>
+            <td>{safeRetrieve(item, ['name'])}</td>
+            <td>
+                {
+                    (safeRetrieve(item, ['permission']) || []).map(perm => VIETNAMESE_PERMISSIONS[perm]).join(', ')
+                }
+            </td>
+        </tr>
+    );
 }
 
 ChangeUserRoleModal.propTypes = {
