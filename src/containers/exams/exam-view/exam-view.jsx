@@ -8,10 +8,11 @@ import {getDayMonthYearString} from "../../../utils/datetime-utils";
 import Image from "../../../commons/image/image";
 import CommentItem from "./comment-item/comment-item";
 import CommentForm from "./comment-form/comment-form";
-import {getCommentsOfPost} from "../../../api/comment-api";
+import {checkCommentVoteStatus, getCommentsOfPost, voteComment} from "../../../api/comment-api";
 import {VOTE_TYPES} from "../../../constants/vote-types";
 import AuthenService from '../../../services/authen-service';
 import {requireAuthen} from "../../../services/require-authen-service";
+import {arrayToDictionary} from "../../../utils/array-to-dictionary";
 
 class ExamView extends Component {
 
@@ -22,6 +23,7 @@ class ExamView extends Component {
             comments: [],
             comment_count: 0,
             vote_type: VOTE_TYPES.none,
+            comment_vote_status: {},
         };
     };
 
@@ -51,6 +53,7 @@ class ExamView extends Component {
         try {
             const post_id = safeRetrieve(this.props, ['match', 'params', 'exam_id']);
             const {comments, count: comment_count} = await getCommentsOfPost(post_id);
+            if (AuthenService.getUserInfo()) this._checkCommentVoteStatus(comments.map(comment => comment.id));
             this.setState({comments, comment_count});
         } catch (err) {
             console.error(err);
@@ -88,8 +91,38 @@ class ExamView extends Component {
         });
     };
 
+    async _checkCommentVoteStatus(comment_id_array) {
+        requireAuthen(async () => {
+            try {
+                const {vote_status} = await checkCommentVoteStatus(comment_id_array);
+                const comment_vote_status = arrayToDictionary(vote_status, 'comment_id', 'vote_type');
+                this.setState({comment_vote_status});
+            } catch (err) {
+                console.error(err);
+                noti('error', err);
+            }
+        });
+    };
+
+    async _voteComment(comment_id, {vote_type}) {
+        requireAuthen(async () => {
+            try {
+                const {comments} = this.state;
+                const {vote_infor} = await voteComment(comment_id, {vote_type});
+                const {up_vote, down_vote} = vote_infor;
+                this.setState({comments: comments.map(comment => (
+                    comment.id === comment_id ? {...comment, up_vote, down_vote} : comment
+                ))});
+                this._checkCommentVoteStatus(comments.map(comment => comment.id));
+            } catch (err) {
+                console.error(err);
+                noti('error', err);
+            }
+        });
+    };
+
     render() {
-        const {post, comments, vote_type} = this.state;
+        const {post, comments, vote_type, comment_vote_status} = this.state;
         const attachments = post.attachments || [];
         return (
             <MainContent className="exam-view" title={safeRetrieve(post, ['title']) || ''}>
@@ -127,10 +160,22 @@ class ExamView extends Component {
                 <div className="comments bg-white rounded">
                     <h5>Bình luận</h5>
                     {
-                        AuthenService.getUserInfo() ? <CommentForm /> : null
+                        AuthenService.getUserInfo()
+                            ? <CommentForm
+                                postId={safeRetrieve(this.props, ['match', 'params', 'exam_id'])}
+                                onCommentCreated={() => {this._getCommentsOfPost()}}
+                            />
+                            : null
                     }
                     {
-                        comments.map(comment => <CommentItem key={comment.id} comment={comment} />)
+                        comments.map(comment => (
+                            <CommentItem
+                                key={comment.id}
+                                comment={comment}
+                                voteType={comment_vote_status[comment.id]}
+                                onVote={this._voteComment.bind(this)}
+                            />
+                        ))
                     }
                 </div>
             </MainContent>
