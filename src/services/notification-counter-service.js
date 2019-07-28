@@ -1,41 +1,36 @@
 // import io from "socket.io-client";
-// import AuthenService from './authen-service';
-//
-// const NOTI_BASE_URL = process.env.REACT_APP_NOTI_API_BASE_URL;
-// const socket = io(NOTI_BASE_URL);
-// const listeners = {};
-// let notification_count = 0;
-//
-// function broadcast() {
-//     for (let key in listeners) {
-//         listeners[key]();
-//     }
-// };
-//
-// function connectUserToNotiServerSocket() {
-//     const userInfo = AuthenService.getUserInfo();
-//     if (userInfo && userInfo.token) {
-//         socket.emit('USER_CONNECT', userInfo.token);
-//     }
-// };
-//
-// AuthenService.register('NotificationCounterService', connectUserToNotiServerSocket);
-//
-// connectUserToNotiServerSocket();
-//
-// socket.on('PUT_NOTIFICATION_COUNT', (noti_count) => {
-//     notification_count = noti_count;
-//     broadcast();
-// });
+import AuthenService from './authen-service';
+import {isAuthenticated} from "../utils/authentication-permission-check";
+
+let listeners = {};
+let notification_count = 0;
+
+function broadcast() {
+    for (let key in listeners) {
+        listeners[key]();
+    }
+}
+
+AuthenService.register('NotificationCounterService', () => {
+    if (!isAuthenticated()) {
+        listeners = {};
+        notification_count = 0
+        broadcast();
+    }
+});
 
 export default {
     getNotificationCount() {
-        // return notification_count;
+        return notification_count;
+    },
+    setNotificationCount(noti_count) {
+        notification_count = noti_count;
+        broadcast();
     },
     register: (key, callback) => {
-        // listeners[key] = callback;
+        listeners[key] = callback;
     },
     unregister: (key) => {
-        // delete listeners[key];
+        delete listeners[key];
     }
 };

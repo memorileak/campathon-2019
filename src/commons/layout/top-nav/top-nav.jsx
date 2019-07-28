@@ -15,9 +15,9 @@ import {
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
 import {safeRetrieve} from "../../../utils/retrieve-value-utils";
-import {isAllowedWithPermission} from "../../../utils/authentication-permission-check";
+import {isAllowedWithPermission, isAuthenticated} from "../../../utils/authentication-permission-check";
 import {USER_PERMISSIONS} from "../../../constants/user-permissions";
-// import NotificationsMenu from "./notifications-menu/notifications-menu";
+import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
 
@@ -75,12 +75,7 @@ class TopNav extends React.Component {
                     <NavbarToggler onClick={this._toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            {/*<NotificationsMenu />
-                            <NavItem>
-                                <NavLink to="/settings" tag={Link}>
-                                    <i className="fa fa-cog" />
-                                </NavLink>
-                            </NavItem>*/}
+                            {isAuthenticated() ? <NotificationsMenu /> : null}
                             {
                                 AuthenService.getUserInfo()
                                     ? <UncontrolledDropdown nav inNavbar>

@@ -6,6 +6,8 @@
         top: -9px;
     }
     .menu {
+        max-height: 80vh;
+        overflow-y: auto;
         width: 30rem;
         .dropdown-item {
             cursor: pointer;
