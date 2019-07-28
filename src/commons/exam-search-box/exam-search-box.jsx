@@ -30,8 +30,8 @@ class ExamSearchBox extends Component {
                         >
                             <option value={POST_SORT_ATTRIBUTE.views}>Lượt xem</option>
                             <option value={POST_SORT_ATTRIBUTE.create_time}>Ngày đăng</option>
-                            <option value={POST_SORT_ATTRIBUTE.up_vote}>Độ hay</option>
-                            <option value={POST_SORT_ATTRIBUTE.down_vote}>Độ dở</option>
+                            <option value={POST_SORT_ATTRIBUTE.up_vote}>Đánh giá tốt</option>
+                            <option value={POST_SORT_ATTRIBUTE.down_vote}>Đánh giá không tốt</option>
                         </Input>
                         <Input
                             type="select"

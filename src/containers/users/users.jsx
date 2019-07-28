@@ -53,12 +53,12 @@ class Users extends Component {
                                     {title: 'Họ và tên'},
                                     {title: 'Vai trò'},
                                     {
-                                        title: 'Lượt đánh giá cao',
+                                        title: 'Đánh giá tốt',
                                         className: produceHeaderClassName('up_vote', sort_attribute, ascending),
                                         onClick: () => {this.setState(produceNewSortState('up_vote', {sort_attribute, ascending}))},
                                     },
                                     {
-                                        title: 'Lượt đánh giá thấp',
+                                        title: 'Đánh giá không tốt',
                                         className: produceHeaderClassName('down_vote', sort_attribute, ascending),
                                         onClick: () => {this.setState(produceNewSortState('down_vote', {sort_attribute, ascending}))},
                                     },
