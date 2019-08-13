@@ -1,0 +1,7 @@
+@import '../../variables';
+
+.user-profile {
+    .user-profile-container {
+        min-height: calc(100vh - #{$top-nav-height} - #{$footer-height});
+    }
+}

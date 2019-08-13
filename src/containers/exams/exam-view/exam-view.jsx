@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 // import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import MainContent from "../../../commons/layout/main-content/main-content";
 import {safeRetrieve} from "../../../utils/retrieve-value-utils";
 import {noti} from "../../../services/noti-service";
@@ -146,7 +147,9 @@ class ExamView extends Component {
                 <FormGroup className="information d-flex align-items-center">
                     <div className="text-secondary mr-3">
                         Đăng bởi&nbsp;
-                        <a href="#!">{safeRetrieve(post, ['post_by'])}</a>&nbsp;-&nbsp;ngày&nbsp;
+                        <Link to={`/user-profile/${safeRetrieve(post, ['user_id'])}`}>
+                            {safeRetrieve(post, ['post_by'])}
+                        </Link>&nbsp;-&nbsp;ngày&nbsp;
                         <span className="text-dark">{getDayMonthYearString(safeRetrieve(post, ['create_time']))}</span>
                     </div>
                     {

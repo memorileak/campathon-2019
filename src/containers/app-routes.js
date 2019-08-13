@@ -6,6 +6,7 @@ import Login from "./login/login";
 import Register from "./register/register";
 import NewExam from "./new-exam/new-exam";
 import Users from "./users/users";
+import UserProfile from "./user-profile/user-profile";
 
 export const APP_ROUTES = [
     {
@@ -37,5 +38,9 @@ export const APP_ROUTES = [
         auth: true,
         permission_required: USER_PERMISSIONS.list_user,
         component: Users,
+    }, {
+        path: "/user-profile/:user_id",
+        exact: true,
+        component: UserProfile,
     }
 ];

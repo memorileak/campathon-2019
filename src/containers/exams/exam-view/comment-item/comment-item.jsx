@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {safeRetrieve} from "../../../../utils/retrieve-value-utils";
 import Image from "../../../../commons/image/image";
 import {getNotificationTimeString} from "../../../../utils/datetime-utils";
@@ -19,7 +20,9 @@ class CommentItem extends Component {
         return (
             <div className="comment-item">
                 <h6>
-                    {safeRetrieve(comment, ['comment_by'])}
+                    <Link to={`/user-profile/${safeRetrieve(comment, ['user_id'])}`}>
+                        {safeRetrieve(comment, ['comment_by'])}
+                    </Link>
                     <span className="small text-secondary">
                         &nbsp;-&nbsp;{getNotificationTimeString(safeRetrieve(comment, ['create_time']))}
                     </span>

@@ -28,6 +28,7 @@ class TopNav extends React.Component {
         };
         this._toggle = this._toggle.bind(this);
         this._logOut = this._logOut.bind(this);
+        this._goToUserProfile = this._goToUserProfile.bind(this);
     };
 
     componentDidMount() {
@@ -49,12 +50,17 @@ class TopNav extends React.Component {
         window.location = '/';
     };
 
+    _goToUserProfile() {
+        const user_id = safeRetrieve(AuthenService.getUserInfo(), ['user', 'id']);
+        this.props.history.push(`/user-profile/${user_id}`);
+    };
+
     render() {
         return (
             <Fragment>
                 <Navbar className="top-nav bg-white" light expand="md">
                     <NavbarBrand href="/">
-                        UETexam
+                        unnamed
                     </NavbarBrand>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
@@ -83,7 +89,7 @@ class TopNav extends React.Component {
                                             {safeRetrieve(AuthenService.getUserInfo(), ['user', 'full_name'])}
                                         </DropdownToggle>
                                         <DropdownMenu right>
-                                            <DropdownItem onClick={() => {}}>
+                                            <DropdownItem onClick={this._goToUserProfile}>
                                                 Thông tin cá nhân
                                             </DropdownItem>
                                             <DropdownItem onClick={this._logOut}>
