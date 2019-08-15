@@ -17,6 +17,7 @@ import {arrayToDictionary} from "../../../utils/array-to-dictionary";
 import {Button, FormGroup} from 'reactstrap';
 import {isAllowedWithPermission} from "../../../utils/authentication-permission-check";
 import {USER_PERMISSIONS} from "../../../constants/user-permissions";
+import FullscreenCarousel from "../../../commons/fullscreen-carousel/fullscreen-carousel";
 
 class ExamView extends Component {
 
@@ -28,6 +29,7 @@ class ExamView extends Component {
             comment_count: 0,
             vote_type: VOTE_TYPES.none,
             comment_vote_status: {},
+            show_carousel: false,
         };
     };
 
@@ -139,7 +141,7 @@ class ExamView extends Component {
     };
 
     render() {
-        const {post, comments, vote_type, comment_vote_status} = this.state;
+        const {post, comments, vote_type, comment_vote_status, show_carousel} = this.state;
         const is_confirm =  post.is_confirm === 'true';
         const attachments = post.attachments || [];
         return (
@@ -169,10 +171,15 @@ class ExamView extends Component {
                 <div className="attachments bg-white form-group rounded">
                     {
                         attachments.map(src => (
-                            <Image key={src} src={src} width="100%" height="auto" />
+                            <Image key={src} centerCrop src={src} width="100%" height="30rem" />
                         ))
                     }
                 </div>
+                <FullscreenCarousel
+                    isOpen={show_carousel}
+                    toggle={() => {this.setState({show_carousel: !show_carousel})}}
+                    images={attachments}
+                />
                 <div className="control bg-white d-flex form-group rounded">
                     <span
                         className={`control-item ${vote_type === VOTE_TYPES.up ? 'text-primary' : 'text-secondary'}`}

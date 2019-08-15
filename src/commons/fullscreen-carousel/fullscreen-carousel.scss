@@ -1,0 +1,40 @@
+@import '../../variables';
+
+.fullscreen-carousel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000cc;
+    i.fa.fa-times {
+        position: absolute;
+        right: 2rem;
+        top: 1rem;
+        color: #{$theme-gray};
+        margin: 1rem 2rem;
+        font-size: 2rem;
+        cursor: pointer;
+        z-index: 5;
+    }
+    .carousel-presentation {
+        height: 100%;
+        .carousel-inner {
+            display: flex;
+            align-items: stretch;
+            height: calc(100% - 3rem);
+            .carousel-item {
+                overflow-y: auto;
+                img {
+                    width: 70%;
+                    height: auto;
+                }
+            }
+        }
+        .carousel-indicators li {
+            width: .5rem;
+            height: .5rem;
+            border-radius: 50%;
+        }
+    }
+}

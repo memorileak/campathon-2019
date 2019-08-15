@@ -44,6 +44,7 @@ class ExamListItem extends Component {
 
 function PreviewExam({examItem}) {
     return <Image
+        centerCrop
         src={safeRetrieve(examItem, ['preview_attachment'])}
         alt="Xem trước"
         width="100%" height="60%"
