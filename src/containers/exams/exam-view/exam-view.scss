@@ -16,6 +16,9 @@
         & > * {
             justify-self: center;
         }
+        .attachment {
+            cursor: pointer;
+        }
     }
     .control {
         padding: 1rem;
@@ -38,6 +41,7 @@
     .exam-view {
         .attachments {
             grid-template-columns: 50% 50%;
+            grid-gap: .125rem;
         }
     }
 }

@@ -30,6 +30,7 @@ class ExamView extends Component {
             vote_type: VOTE_TYPES.none,
             comment_vote_status: {},
             show_carousel: false,
+            carousel_index: 0,
         };
     };
 
@@ -141,7 +142,7 @@ class ExamView extends Component {
     };
 
     render() {
-        const {post, comments, vote_type, comment_vote_status, show_carousel} = this.state;
+        const {post, comments, vote_type, comment_vote_status, show_carousel, carousel_index} = this.state;
         const is_confirm =  post.is_confirm === 'true';
         const attachments = post.attachments || [];
         return (
@@ -170,13 +171,18 @@ class ExamView extends Component {
                 </FormGroup>
                 <div className="attachments bg-white form-group rounded">
                     {
-                        attachments.map(src => (
-                            <Image key={src} centerCrop src={src} width="100%" height="30rem" />
+                        attachments.map((src, i) => (
+                            <Image
+                                centerCrop key={src} src={src}
+                                className="attachment" width="100%" height="30rem"
+                                onClick={() => {this.setState({show_carousel: true, carousel_index: i})}}
+                            />
                         ))
                     }
                 </div>
                 <FullscreenCarousel
                     isOpen={show_carousel}
+                    initialIndex={carousel_index}
                     toggle={() => {this.setState({show_carousel: !show_carousel})}}
                     images={attachments}
                 />
