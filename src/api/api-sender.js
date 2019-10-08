@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AuthenService from '../services/authen-service';
 import {noti, sleepNoti} from "../services/noti-service";
+import {saveLastPath} from "../services/path-memorize-service";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -12,6 +13,7 @@ function handleResponse(res) {
             return Promise.resolve(res.data.data);
         } else {
             if (res.data.code === 22 && AuthenService.getUserInfo()) {
+                saveLastPath(window.location.href.replace(window.location.origin, ''));
                 AuthenService.logOut();
                 noti('warning', 'Your session has expired. Please login again.');
                 sleepNoti();
@@ -53,7 +55,39 @@ export function senderDelete(route, access_token) {
     return axios.delete(url, {headers}).then(handleResponse);
 }
 
+export function senderUploadFile(route, payload, access_token) {
+    let url = `${API_BASE_URL}${route}`;
+    const formData = new FormData();
+    Object.keys(payload).forEach((key) => {
+        if (Array.isArray(payload[key])) {
+            payload[key].forEach(element => {formData.append(key, element)})
+        } else {
+            formData.append(key, payload[key]);
+        }
+    });
+    const headers = {
+        token: access_token || AuthenService.getUserInfo().token,
+        "Content-Type": "multipart/form-data",
+    };
+    return axios.post(url, formData, {headers}).then(handleResponse);
+}
+
+export function senderGetWithoutAuth(route) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.get(url).then(handleResponse);
+}
+
 export function senderPostWithoutAuth(route, payload) {
     let url = `${API_BASE_URL}${route}`;
     return axios.post(url, payload).then(handleResponse);
+}
+
+export function senderPutWithoutAuth(route, payload) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.put(url, payload).then(handleResponse);
+}
+
+export function senderDeleteWithoutAuth(route) {
+    let url = `${API_BASE_URL}${route}`;
+    return axios.delete(url).then(handleResponse);
 }

@@ -1,0 +1,47 @@
+@import '../../../variables';
+
+.exam-view {
+    .information {
+        button.btn.btn-outline-success {
+            &:hover {
+                color: white;
+                background-color: #{$color-success}
+            }
+            background-color: white;
+        }
+    }
+    .attachments {
+        display: grid;
+        grid-template-columns: auto;
+        & > * {
+            justify-self: center;
+        }
+        .attachment {
+            cursor: pointer;
+        }
+    }
+    .control {
+        padding: 1rem;
+        .control-item {
+            font-size: 1rem;
+            &:not(:last-child) {
+                margin-right: 2rem;
+            }
+            &:not(.no-interact) {
+                cursor: pointer;
+            }
+        }
+    }
+    .comments {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .exam-view {
+        .attachments {
+            grid-template-columns: 50% 50%;
+            grid-gap: .125rem;
+        }
+    }
+}

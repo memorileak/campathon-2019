@@ -14,8 +14,9 @@ import {
     DropdownItem,
 } from 'reactstrap';
 import AuthenService from "../../../services/authen-service";
-import ChangePasswordModal from '../../../containers/dashboard-route/containers/change-password-modal/change-password-modal';
-import SellproLogo from '../../../assets/images/logo/sellpro_logo-2.png';
+import {safeRetrieve} from "../../../utils/retrieve-value-utils";
+import {isAllowedWithPermission, isAuthenticated} from "../../../utils/authentication-permission-check";
+import {USER_PERMISSIONS} from "../../../constants/user-permissions";
 import NotificationsMenu from "./notifications-menu/notifications-menu";
 
 class TopNav extends React.Component {
@@ -24,10 +25,18 @@ class TopNav extends React.Component {
         super(props);
         this.state = {
             isOpen: false,
-            isOpenModalChangePassword: false
         };
         this._toggle = this._toggle.bind(this);
         this._logOut = this._logOut.bind(this);
+        this._goToUserProfile = this._goToUserProfile.bind(this);
+    };
+
+    componentDidMount() {
+        AuthenService.register('TopNav', this.forceUpdate.bind(this));
+    };
+
+    componentWillUnmount() {
+        AuthenService.unregister('TopNav');
     };
 
     _toggle() {
@@ -37,63 +46,74 @@ class TopNav extends React.Component {
     };
 
     _logOut() {
-        AuthenService.logOut(true);
+        AuthenService.logOut();
+        window.location = '/';
     };
 
-    _toggleModal = () => {
-        this.setState({
-            isOpenModalChangePassword: !this.state.isOpenModalChangePassword
-        })
+    _goToUserProfile() {
+        const user_id = safeRetrieve(AuthenService.getUserInfo(), ['user', 'id']);
+        this.props.history.push(`/user-profile/${user_id}`);
     };
 
     render() {
-        const { isOpenModalChangePassword } = this.state;
-        const { routes } = this.props;
         return (
             <Fragment>
-                <Navbar className="top-nav" color="light" light expand="md">
+                <Navbar className="top-nav bg-white" light expand="md">
                     <NavbarBrand href="/">
-                        <img className="app-logo" src={SellproLogo} alt="Sellpro Logo" />
+                        unnamed
                     </NavbarBrand>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink to="/" tag={Link}>
+                                Trang chủ
+                            </NavLink>
+                        </NavItem>
+                        {
+                            isAllowedWithPermission(USER_PERMISSIONS.list_user)
+                                ? <NavItem>
+                                    <NavLink to="/users" tag={Link}>
+                                        Quản lý người dùng
+                                    </NavLink>
+                                </NavItem>
+                                : null
+                        }
+                    </Nav>
                     <NavbarToggler onClick={this._toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="d-md-down-none" navbar>
+                        <Nav className="ml-auto" navbar>
+                            {isAuthenticated() ? <NotificationsMenu /> : null}
                             {
-                                !!routes ?
-                                    routes.map(e => (
-                                        <NavItem key={e.path}>
-                                            <NavLink replace to={e.path} tag={Link}>
-                                                {e.name}
+                                AuthenService.getUserInfo()
+                                    ? <UncontrolledDropdown nav inNavbar>
+                                        <DropdownToggle nav caret>
+                                            {safeRetrieve(AuthenService.getUserInfo(), ['user', 'full_name'])}
+                                        </DropdownToggle>
+                                        <DropdownMenu right>
+                                            <DropdownItem onClick={this._goToUserProfile}>
+                                                Thông tin cá nhân
+                                            </DropdownItem>
+                                            <DropdownItem onClick={this._logOut}>
+                                                Đăng xuất
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </UncontrolledDropdown>
+                                    : <Fragment>
+                                        <NavItem className="mr-1">
+                                            <NavLink to="/login" tag={Link}>
+                                                Đăng nhập
                                             </NavLink>
                                         </NavItem>
-                                    )) : null
+                                        <NavItem>
+                                            <NavLink to="/register" tag={Link}>
+                                                Tạo tài khoản mới
+                                            </NavLink>
+                                        </NavItem>
+                                    </Fragment>
                             }
-                        </Nav>
-                        <Nav className="ml-auto" navbar>
-                            <NotificationsMenu />
-                            <NavItem>
-                                <NavLink to="/settings" tag={Link}>
-                                    <i className="fa fa-cog" />
-                                </NavLink>
-                            </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Wolfgang
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem onClick={this._toggleModal}>
-                                        Change password
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem onClick={this._logOut}>
-                                        Log out
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+
                         </Nav>
                     </Collapse>
                 </Navbar>
-                <ChangePasswordModal isOpen={isOpenModalChangePassword} toggle={this._toggleModal} />
             </Fragment>
         );
     };

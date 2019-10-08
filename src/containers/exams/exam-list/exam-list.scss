@@ -1,0 +1,25 @@
+.exam-list {
+    .filter {
+        margin-bottom: 2.5rem;
+    }
+    .list {
+        display: grid;
+        grid-template-columns: auto;
+        &>* {
+            justify-self: center;
+        }
+    }
+    .pagination-container {
+        nav[aria-label="pagination"] {
+            display: inline-block;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .exam-list {
+        .list {
+            grid-template-columns: 33% 33% 33%;
+        }
+    }
+}
