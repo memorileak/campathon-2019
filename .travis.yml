@@ -1,10 +1,18 @@
 language: node_js
 node_js:
   - 8.15
+before_install:
+  - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+  - which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)
+  - which rsync || (apt-get update -y && apt-get install rsync -y)
+  - eval $(ssh-agent -s)
+  - echo "$PROD_SERVER_AUTH" | tr -d '\r' | ssh-add - > /dev/null 
 install:
-  - echo "Installing..."
+  - npm install
 script:
-  - uname -a
+  - npm run build
+deploy:
+  - rsync -azvh --delete --rsh="ssh -p $PROD_SERVER_PORT -o StrictHostKeyChecking=no" build/* $PROD_SERVER_USER@$PROD_SERVER_IP:/var/www/web-app-campathon
 branches:
   only:
-    - dev
+    - master
