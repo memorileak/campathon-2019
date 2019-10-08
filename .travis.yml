@@ -16,7 +16,7 @@ script:
 deploy:
   - provider: script
     script:
-      - rsync -azvh --delete --rsh="ssh -p $PROD_SERVER_PORT -o StrictHostKeyChecking=no" build/* $PROD_SERVER_USER@$PROD_SERVER_IP:/var/www/web-app-campathon
+      - rsync -azvh --delete --rsh="ssh -p $PROD_SERVER_PORT -o StrictHostKeyChecking=no" `pwd`/build/* $PROD_SERVER_USER@$PROD_SERVER_IP:/var/www/web-app-campathon
     on:
       branch: master
 branches:
