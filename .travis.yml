@@ -4,6 +4,7 @@ node_js:
 before_install:
   - openssl aes-256-cbc -K $encrypted_fcc97e029ac9_key -iv $encrypted_fcc97e029ac9_iv -in quan-server.pem.enc -out quan-server.pem -d
   - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+  - chmod 700 quan-server.pem
   - which ssh-agent || (apt-get update -y && apt-get install openssh-client -y)
   - which rsync || (apt-get update -y && apt-get install rsync -y)
   - eval $(ssh-agent -s)
