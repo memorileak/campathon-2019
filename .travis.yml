@@ -10,6 +10,7 @@ before_install:
   - eval $(ssh-agent -s)
   - ssh-add quan-server.pem
   - rm -f quan-server.pem
+  - cp config/.production.env .env
 install:
   - npm install
 script:
