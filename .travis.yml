@@ -7,6 +7,7 @@ before_install:
   - which rsync || (apt-get update -y && apt-get install rsync -y)
   - eval $(ssh-agent -s)
   - echo "$PROD_SERVER_AUTH" | tr '|' '\n' | tr '#' ' ' | tr -d '\r' > ~/auth.pem 
+  - chmod 700 ~/auth.pem
   - ssh-add ~/auth.pem 
   - rm -f ~/auth.pem
 install:
